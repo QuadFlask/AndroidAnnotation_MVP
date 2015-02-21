@@ -5,22 +5,38 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.widget.TextView;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements MainActPresenterImpl.Callback {
 
-    private MainViewModel mainViewModel;
+    private MainActPresenter mainActPresenter;
+    private MainModel mainModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mainViewModel = new MainViewModel(MainActivity.this);
-        mainViewModel.initView();
+        mainModel = new MainModel(getUiHandler());
+        mainActPresenter = new MainActPresenterImpl();
+        mainActPresenter.initView(getWindow().getDecorView());
+        mainActPresenter.setCallback(this);
 
     }
 
+    @Override
+    public void onRequestClick(View view) {
+        mainModel.requestData();
+    }
 
+    private Handler getUiHandler() {
+        return new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+
+                mainActPresenter.setResultText(msg.obj.toString());
+            }
+        };
+    }
 }
