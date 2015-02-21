@@ -1,6 +1,6 @@
 # AndroidAnnotation_MVP
 
-Branch - Master : Plane Code
+Branch - Master : Plain Code
 
 Branch - mvc : MVC Pattern
 
