@@ -1,42 +1,27 @@
 package com.nobrain.androidannotation_mvp;
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.view.View;
+
+import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EActivity;
 
 
-public class MainActivity extends Activity implements MainActPresenterImpl.Callback {
+@EActivity(R.layout.activity_main)
+public class MainActivity extends Activity {
 
-    private MainActPresenter mainActPresenter;
-    private MainModel mainModel;
+    @Bean
+    MainActPresenter mainActPresenter;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    @Bean
+    MainModel mainModel;
 
-        mainModel = new MainModel(getUiHandler());
-        mainActPresenter = new MainActPresenterImpl();
-        mainActPresenter.initView(getWindow().getDecorView());
-        mainActPresenter.setCallback(this);
-
+    @Click(R.id.btn_01)
+    @Background
+    void onRequestClick() {
+        String result = mainModel.requestData();
+        mainActPresenter.setResultText(result);
     }
 
-    @Override
-    public void onRequestClick(View view) {
-        mainModel.requestData();
-    }
-
-    private Handler getUiHandler() {
-        return new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-
-                mainActPresenter.setResultText(msg.obj.toString());
-            }
-        };
-    }
 }

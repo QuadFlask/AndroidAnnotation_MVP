@@ -1,20 +1,23 @@
 package com.nobrain.androidannotation_mvp;
 
-import android.view.View;
+import android.widget.TextView;
+
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.UiThread;
+import org.androidannotations.annotations.ViewById;
 
 /**
  * Created by Steve SeongUg Jung on 15. 2. 21..
  */
-public interface MainActPresenter {
+@EBean
+public class MainActPresenter {
 
-    void initView(View rootView);
+    @ViewById(R.id.text_01)
+    TextView resultTextView;
 
-    void setResultText(String text);
-
-    void setCallback(Callback callback);
-
-
-    interface Callback {
-        public void onRequestClick(View view);
+    @UiThread
+    public void setResultText(String text) {
+        resultTextView.setText(text);
     }
+
 }
