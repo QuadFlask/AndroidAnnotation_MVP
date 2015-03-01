@@ -12,7 +12,7 @@ import org.androidannotations.annotations.EActivity;
 public class MainActivity extends Activity {
 
     @Bean
-    MainActPresenter mainActPresenter;
+    MainActView mainActView;
 
     @Bean
     MainModel mainModel;
@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
     @Background
     void onRequestClick() {
         String result = mainModel.requestData();
-        mainActPresenter.setResultText(result);
+        mainActView.setResultText(result);
     }
 
 }

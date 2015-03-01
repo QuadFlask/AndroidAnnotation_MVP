@@ -10,7 +10,7 @@ import org.androidannotations.annotations.ViewById;
  * Created by Steve SeongUg Jung on 15. 2. 21..
  */
 @EBean
-public class MainActPresenter {
+public class MainActView {
 
     @ViewById(R.id.text_01)
     TextView resultTextView;
