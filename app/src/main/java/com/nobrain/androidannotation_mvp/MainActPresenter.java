@@ -1,20 +1,15 @@
 package com.nobrain.androidannotation_mvp;
 
-import android.view.View;
-
 /**
  * Created by Steve SeongUg Jung on 15. 2. 21..
  */
 public interface MainActPresenter {
 
-    void initView(View rootView);
+    void setView(View view);
 
-    void setResultText(String text);
+    void onRequestClick();
 
-    void setCallback(Callback callback);
-
-
-    interface Callback {
-        public void onRequestClick(View view);
+    interface View {
+        void setResultText(String text);
     }
 }

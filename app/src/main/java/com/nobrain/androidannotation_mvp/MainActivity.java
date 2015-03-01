@@ -3,40 +3,38 @@ package com.nobrain.androidannotation_mvp;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.view.View;
+import android.widget.TextView;
 
 
-public class MainActivity extends Activity implements MainActPresenterImpl.Callback {
+public class MainActivity extends Activity implements MainActPresenter.View {
 
     private MainActPresenter mainActPresenter;
-    private MainModel mainModel;
+
+
+    private TextView resultTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mainModel = new MainModel(getUiHandler());
-        mainActPresenter = new MainActPresenterImpl();
-        mainActPresenter.initView(getWindow().getDecorView());
-        mainActPresenter.setCallback(this);
+        resultTextView = (TextView) findViewById(R.id.text_01);
+
+        mainActPresenter = new MainActPresenterImpl(new Handler());
+        mainActPresenter.setView(this);
+
+        findViewById(R.id.btn_01).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActPresenter.onRequestClick();
+            }
+        });
 
     }
 
     @Override
-    public void onRequestClick(View view) {
-        mainModel.requestData();
-    }
-
-    private Handler getUiHandler() {
-        return new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-
-                mainActPresenter.setResultText(msg.obj.toString());
-            }
-        };
+    public void setResultText(String text) {
+        resultTextView.setText(text);
     }
 }
